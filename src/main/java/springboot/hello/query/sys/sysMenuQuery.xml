@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query queryId="sysMenuQuery">
+	<sql>
+		<![CDATA[
+		SELECT  
+		      MENU_ID as menuId,
+		      IS_AVIABLE as isAviable,
+		      MENU_TYPE as menuType,
+		      MENU_NAME as menuName,
+		      MENU_URL as menuUrl,
+		      MENU_ICON as menuIcon,
+		      SORT_FLAG as sortFlag,
+		      CREATE_USER_ID as createUserId,
+		      CREATE_TIME as createTime		
+		FROM SYS_MENU
+		WHERE 1=1
+		]]>
+		
+	</sql>
+	
+	<table>
+		<head>
+				<td type="checkbox" fixed="left"  totalRowText='合计' />
+		     	<td field="menuId" column="MENU_ID" title="菜单ID" hide="true"></td>
+		     	<td field="isAviable" column="IS_AVIABLE" title="是否可用 1可用 0不可用" ></td>
+		     	<td field="menuType" column="MENU_TYPE" title="菜单类型 1 主菜单  2组  3 子菜单" ></td>
+		     	<td field="menuName" column="MENU_NAME" title="菜单名称" ></td>
+		     	<td field="menuUrl" column="MENU_URL" title="菜单url" ></td>
+		     	<td field="menuIcon" column="MENU_ICON" title="菜单icon" ></td>
+		     	<td field="sortFlag" column="SORT_FLAG" title="排序" ></td>
+		     	<td field="createUserId" column="CREATE_USER_ID" title="创建人" hide="true"></td>
+		     	<td field="createTime" column="CREATE_TIME" title="创建时间" ></td>
+		    	<td  title="操作" templet="#editpane" ></td>
+		</head>
+	</table>
+	
+	
+</query>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query queryId="sysCodeTypeQuery">
+	<sql>
+		<![CDATA[
+		SELECT  
+		      CODE_TYPE_ID as codeTypeId,
+		      CODE_TYPE_NAME as codeTypeName,
+		      CODE_TYPE_CODE as codeTypeCode,
+		      IS_AVIABLE as isAviable,
+		      SORT_FLAG as sortFlag,
+		      CREATE_USER_ID as createUserId,
+		      CREATE_TIME as createTime		
+		FROM SYS_CODE_TYPE
+		WHERE 1=1
+		 [@codeTypeName; AND CODE_TYPE_NAME = '{#codeTypeName}' ]
+		 [@codeTypeCode; AND CODE_TYPE_CODE = '{#codeTypeCode}' ]
+		]]>
+		
+	</sql>
+	
+	<table>
+		<head>
+				<td type="checkbox" fixed="left"  totalRowText='合计' />
+		     	<td field="codeTypeId" column="CODE_TYPE_ID" title="编码类型ID" hide="true"></td>
+		     	<td field="codeTypeName" column="CODE_TYPE_NAME" title="类型名称" ></td>
+		     	<td field="codeTypeCode" column="CODE_TYPE_CODE" title="类型编码" ></td>
+		     	<td field="isAviable" column="IS_AVIABLE" title="是否可用" ></td>
+		     	<td field="sortFlag" column="SORT_FLAG" title="排序" ></td>
+		     	<td field="createUserId" column="CREATE_USER_ID" title="创建人" hide="true"></td>
+		     	<td field="createTime" column="CREATE_TIME" title="创建时间" hide="true"></td>
+		    	<td  title="操作" templet="#editpane" ></td>
+		</head>
+	</table>
+	
+	
+</query>

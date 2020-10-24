@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- * Created by hbm Generator<27683139@qq.com> on 2020年10月24日. -->
+<mapper  namespace="springboot.hello.sys.dao.SysCodeTypeDao">
+	<resultMap id="syscodetype"
+		type="springboot.hello.sys.entity.SysCodeType">
+		<id property="codeTypeId" column="CODE_TYPE_ID" />
+		<result property="codeTypeName" column="CODE_TYPE_NAME" />
+		<result property="codeTypeCode" column="CODE_TYPE_CODE" />
+		<result property="isAviable" column="IS_AVIABLE" />
+		<result property="sortFlag" column="SORT_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<sql id="columns">
+		`CODE_TYPE_ID` ,`CODE_TYPE_NAME` ,`CODE_TYPE_CODE` ,`IS_AVIABLE` ,`SORT_FLAG`
+		,`CREATE_USER_ID` ,`CREATE_TIME`
+	</sql>
+
+	<insert id="insert">
+		<selectKey keyProperty="codeTypeId" resultType="string"
+			order="BEFORE">
+			select uuid() as id from dual
+		</selectKey>
+		insert into `SYS_CODE_TYPE`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="codeTypeId != null">
+				`CODE_TYPE_ID`,
+			</if>
+			<if test="codeTypeName != null">
+				`CODE_TYPE_NAME`,
+			</if>
+			<if test="codeTypeCode != null">
+				`CODE_TYPE_CODE`,
+			</if>
+			<if test="isAviable != null">
+				`IS_AVIABLE`,
+			</if>
+			<if test="sortFlag != null">
+				`SORT_FLAG`,
+			</if>
+			<if test="createUserId != null">
+				`CREATE_USER_ID`,
+			</if>
+			<if test="createTime != null">
+				`CREATE_TIME`,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="codeTypeId != null">
+				#{codeTypeId} ,
+			</if>
+			<if test="codeTypeName != null">
+				#{codeTypeName} ,
+			</if>
+			<if test="codeTypeCode != null">
+				#{codeTypeCode} ,
+			</if>
+			<if test="isAviable != null">
+				#{isAviable} ,
+			</if>
+			<if test="sortFlag != null">
+				#{sortFlag} ,
+			</if>
+			<if test="createUserId != null">
+				#{createUserId} ,
+			</if>
+			<if test="createTime != null">
+				#{createTime} ,
+			</if>
+		</trim>
+	</insert>
+
+
+
+	<delete id="deleteByIds">
+		delete from `SYS_CODE_TYPE`
+		where `CODE_TYPE_ID` in
+		<foreach collection="ids" open="(" item="id" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+
+	<select id="getById" resultMap="syscodetype">
+		select
+		<include refid="columns" />
+		from `SYS_CODE_TYPE`
+		where `CODE_TYPE_ID` = #{id}
+	</select>
+
+
+</mapper>

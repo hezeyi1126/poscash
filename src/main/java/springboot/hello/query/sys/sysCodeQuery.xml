@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query queryId="sysCodeQuery">
+	<sql>
+		<![CDATA[
+		SELECT
+			( SELECT CODE_TYPE_CODE FROM SYS_CODE_TYPE a WHERE a.CODE_TYPE_ID = CODE_TYPE_ID ) AS CODE_TYPE_CODE,
+			CODE_ID AS codeId,
+			( SELECT CODE_TYPE_NAME FROM SYS_CODE_TYPE a WHERE a.CODE_TYPE_ID = CODE_TYPE_ID ) AS CODE_TYPE_NAME,
+			code AS code,
+			CODE_VAL AS codeVal,
+			( CASE IS_AVIABLE WHEN 1 THEN '可用' ELSE '停用' END )  AS isAviable,
+			SORT_FLAG AS sortFlag,
+			CREATE_USER_ID AS createUserId,
+			CREATE_TIME AS createTime 
+		FROM
+			SYS_CODE 
+		WHERE
+			1 =1
+		 [@code; AND code = '{#code}' ]
+		 [@codeTypeId; AND CODE_TYPE_ID = '{#codeTypeId}' ]
+		 ORDER BY SORT_FLAG
+		]]>
+	</sql>
+	
+	<table>
+		<head>
+				<td type="checkbox" fixed="left"  totalRowText='合计' />
+		     	<td field="codeId" column="CODE_ID" title="编码ID" hide="true"></td>
+		     	<td field="CODE_TYPE_CODE" column="CODE_TYPE_CODE" title="编码类型编码" ></td>
+		     	<td field="CODE_TYPE_NAME" column="CODE_TYPE_NAME" title="编码类型" ></td>
+		     	<td field="code" column="CODE" title="编码" ></td>
+		     	<td field="codeVal" column="CODE_VAL" title="编码值" ></td>
+		     	<td field="isAviable" column="IS_AVIABLE" title="是否可用" ></td>
+		     	<td field="sortFlag" column="SORT_FLAG" title="排序" ></td>
+		     	<td field="createUserId" column="CREATE_USER_ID" title="创建人" hide="true"></td>
+		     	<td field="createTime" column="CREATE_TIME" title="创建时间" hide="true"></td>
+		    	<td  title="操作" templet="#editpane" ></td>
+		</head>
+	</table>
+	
+	
+</query>
