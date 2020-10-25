@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query queryId="busGoodsTypeQuery">
+	<sql>
+		<![CDATA[
+		SELECT  
+		      TYPE_ID as typeId,
+		      TYPE_NAME as typeName,
+		      PARENT_ID as parentId,
+		      IS_AVIABLE as isAviable,
+		      SORT_FLAG as sortFlag,
+		      CREATE_USER_ID as createUserId,
+		      CREATE_TIME as createTime		
+		FROM BUS_GOODS_TYPE
+		WHERE 1=1
+		]]>
+		
+	</sql>
+	
+	<table>
+		<head>
+				<td type="checkbox" fixed="left"  totalRowText='合计' />
+		     	<td field="typeId" column="TYPE_ID" title="类型ID" ></td>
+		     	<td field="typeName" column="TYPE_NAME" title="菜单名称" ></td>
+		     	<td field="parentId" column="PARENT_ID" title="上级类型ID" hide="true"></td>
+		     	<td field="isAviable" column="IS_AVIABLE" title="是否可用 1可用 0不可用" hide="true"></td>
+		     	<td field="sortFlag" column="SORT_FLAG" title="排序" hide="true"></td>
+		     	<td field="createUserId" column="CREATE_USER_ID" title="创建人" hide="true"></td>
+		     	<td field="createTime" column="CREATE_TIME" title="创建时间" hide="true"></td>
+		    	<td  title="操作" templet="#editpane" ></td>
+		</head>
+	</table>
+	
+	
+</query>
