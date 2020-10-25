@@ -2,6 +2,7 @@ package springboot.hello.sys.service.impl;
 
 import springboot.hello.sys.service.SysCodeService;
 import springboot.hello.sys.dao.SysCodeDao;
+import springboot.hello.sys.dao.SysCodeTypeDao;
 import springboot.hello.sys.entity.SysCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CachePut;
 import springboot.hello.entity.base.ParamObject;
 import springboot.hello.util.BeanUtil;
+import springboot.hello.util.StringUtil;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
@@ -34,6 +40,10 @@ public class SysCodeServiceImpl implements SysCodeService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Object add(ParamObject<SysCode> paramObject ) throws Exception {
     	BeanUtil.buildEntity(SysCode.class, paramObject);
+    	//查询 code
+    	SysCode code = paramObject.getEntity();
+    	code.setCodeTypeCode(sysCodeTypeDao.getById(code.getCodeTypeId()).getCodeTypeCode());
+    	
     	sysCodeDao.insert(paramObject.getEntity());
     	paramObject.setMsg(  "添加成功");
     	return null;
@@ -75,9 +85,17 @@ public class SysCodeServiceImpl implements SysCodeService {
     	BeanUtil.buildEntity(SysCode.class, paramObject);
     	SysCode entity = paramObject.getEntity();
     	//切割code
+    	String codes = (String) paramObject.getValue("code");
+    	String[] codesArr = StringUtil.splitUniq(codes, ",");
+    	Map<String, Object> res = new HashMap<String, Object>();
+    	for(String code :codesArr) {
+    		SysCode scode = new SysCode();
+    		scode.setCodeTypeCode(code);
+    		scode.setIsAviable(new BigDecimal(1));
+    		res.put(code, sysCodeDao.select(scode));
+    	}
     	
-    	System.out.println();
-    	return entity;
+    	return res;
     }
 
 
@@ -85,6 +103,9 @@ public class SysCodeServiceImpl implements SysCodeService {
 
     @Autowired
     private SysCodeDao sysCodeDao;
+    
+    @Autowired
+    private SysCodeTypeDao sysCodeTypeDao;
     
      @Override
     public SysCode getById(String id){

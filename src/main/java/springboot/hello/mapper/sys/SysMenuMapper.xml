@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <!--
-* Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
 -->
 <mapper namespace="springboot.hello.sys.dao.SysMenuDao">
     <resultMap id="sysmenu" type="springboot.hello.sys.entity.SysMenu">

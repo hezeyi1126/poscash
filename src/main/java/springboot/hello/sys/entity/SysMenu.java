@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 /**
-* Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
 */
 @Table(name = "SYS_MENU")
 public class SysMenu implements Serializable {
@@ -24,7 +24,7 @@ public class SysMenu implements Serializable {
          private String menuId; 
          
         /**
-         *上级菜单
+         *上级ID
          */
          @Column(name="PARENT_ID")
          private String parentId;

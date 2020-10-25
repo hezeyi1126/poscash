@@ -4,7 +4,7 @@ import springboot.hello.sys.entity.SysMenu;
 import java.util.List;
 
 /**
-* Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
 */
 public interface SysMenuService {
 
