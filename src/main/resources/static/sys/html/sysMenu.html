@@ -66,12 +66,27 @@
 			<form class="layui-form" id="editform">
 				<input type="hidden" name="menuId" />
 				<div class="layui-form-item">
-					<label for="L_email" class="layui-form-label"> <span
-						class="x-red">*</span> 是否可用 1可用 0不可用
+					<label class="layui-form-label"> 上级菜单</label>
+					<div class="layui-input-block lafite_width_60">
+						<select name="parentId">
+							<option value="2">用户状态</option>
+							<option value="3">支付宝</option>
+							<option value="4">微信</option>
+							<option value="5">货到付款</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"> <span class="x-red">*</span>
+						是否可用 1可用 0不可用
 					</label>
 					<div class="layui-input-block lafite_width_60">
-						<input type="text" id="isAviable" name="isAviable"
-							lay-verify="required" autocomplete="off" class="layui-input">
+						<select name="isAviable" lay-verify="required">
+							<option value="2">用户状态</option>
+							<option value="3">支付宝</option>
+							<option value="4">微信</option>
+							<option value="5">货到付款</option>
+						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -86,10 +101,12 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_email" class="layui-form-label"> 菜单名称 </label>
+					<label for="L_email" class="layui-form-label"> <span
+						class="x-red">*</span> 菜单名称
+					</label>
 					<div class="layui-input-block lafite_width_60">
 						<input type="text" id="menuName" name="menuName"
-							autocomplete="off" class="layui-input">
+							lay-verify="required" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -115,14 +132,8 @@
 							lay-verify="required" autocomplete="off" class="layui-input">
 					</div>
 				</div>
-				<input type="hidden" name="createUserId" />
-				<div class="layui-form-item">
-					<label class="layui-form-label"> 创建时间</label>
-					<div class="layui-input-inline">
-						<input type="text" class="layui-input" inputtype="date"
-							name="createTime" placeholder="yyyy-MM-dd">
-					</div>
-				</div>
+				<input type="hidden" name="createUserId" /> <input type="hidden"
+					name="createTime" />
 
 
 
@@ -132,9 +143,6 @@
 							onclick="back()">取消</div>
 						<button lay-submit lay-filter="subform"
 							class="lafite-layui-btn2 lafite_margin_left_10 lafite_height_35px">保存</button>
-							
-							<button type="button" onclick="setval();"
-							class="lafite-layui-btn2 lafite_margin_left_10 lafite_height_35px">设置</button>
 					</div>
 				</div>
 
@@ -151,12 +159,6 @@
 
 </body>
 <script>
-	function setval(select , val){
-	//	$("#editform").find("[name='menuType']").find("option[value='"+ 2 +"']").prop("selected",true);
-		
-	}
-	
-	
 	var loadingtype = 3;
 	var service = "sysMenuService"
 	var queryid = "sysMenuQuery"
@@ -195,15 +197,16 @@
 			 console.log(params);
 			initTable(params);
 		}
+		
 		//填充表单
 		 window.fillForm =function (obj){
+		 var eform = $("#editform");
 			for(var name in obj){
 			//$("input")
-				$("#editform").find("[name='"+ name +"']").val(obj[name]);
+				eform.find("[name='"+ name +"']").val(obj[name]);
 			}
 			form.render();
 		}
-		
 		
 		//监听提交
 		form.on('submit(subform)', function(data) {
@@ -336,6 +339,7 @@
 	function clearForm(){
 		$("#editform input,select,textarea").val("");
 	}
+	
 
 	/*编辑*/
 	function edit( id) {

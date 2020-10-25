@@ -65,6 +65,20 @@ public class SysCodeServiceImpl implements SysCodeService {
     	paramObject.setMsg(  "保存成功");
         return entity;
     }
+    /**
+     * 查询所有code的编码
+     * @param paramObject
+     * @return
+     * @throws Exception
+     */
+    public Object getAllCode(ParamObject<SysCode> paramObject ) throws Exception{
+    	BeanUtil.buildEntity(SysCode.class, paramObject);
+    	SysCode entity = paramObject.getEntity();
+    	//切割code
+    	
+    	System.out.println();
+    	return entity;
+    }
 
 
 

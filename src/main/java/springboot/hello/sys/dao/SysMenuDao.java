@@ -12,7 +12,7 @@ import tk.mybatis.mapper.common.Mapper;
 @org.apache.ibatis.annotations.Mapper
 public interface SysMenuDao extends Mapper<SysMenu>{
 
-    int insert(SysMenu sysMenu);
+   int insert(SysMenu sysMenu);
 
   //  int delete(SysMenu sysMenu);
 

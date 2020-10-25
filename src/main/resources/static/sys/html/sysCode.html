@@ -26,14 +26,14 @@
 					<!-- 查询面板 👇-->
 					<form class="layui-form" action="">
 						<div class="layui-card-body " id="searchPane">
-							<!-- <div class="layui-input-inline layui-show-xs-block">
+							 <div class="layui-input-inline layui-show-xs-block">
 								<input type="text"  name="code" placeholder="类型编码"
 							    	autocomplete="off" class="layui-input">
-							</div> -->
+							</div> 
 							
 							<div class="layui-input-inline layui-show-xs-block">
-								<select name="codeTypeId">
-								</select>
+								<input type="text"  name="name" placeholder="类型名称"
+							    	autocomplete="off" class="layui-input">
 							</div>
 
 
@@ -80,7 +80,7 @@
 						编码类型
 					</label>
 					<div class="layui-input-block lafite_width_60">
-						<select name="codeTypeId" lay-verify="required">
+						<select name="codeTypeId" lay-verify="required" code="MENU_TYPE">
 						
 						</select>
 					</div>
@@ -167,8 +167,7 @@
 		var tableIns;
 		var params = new Object();//查询参数
 		
-		//初始化
-			pro.callServer("sysCodeTypeService", "list",{} , function(res) {
+			/* pro.callServer("sysCodeTypeService", "list",{} , function(res) {
 				console.log(res);
 				if (res.data.state == "1") {
 					var typeSelect = $('#editPane').find('[name=codeTypeId]');
@@ -187,16 +186,46 @@
 				} else {
 					
 				}
-			});
+			}); */
 		
 		
 		 //同时绑定多个
-		  lay('[inputtype=date]').each(function(){
+		  $('[inputtype=date]').each(function(){
 		    laydate.render({
 		      elem: this
 		      ,trigger: 'click'
 		    });
 		  });
+			
+		window.init = function(){
+			//查询所有带code的select
+			var codeSelectArr = $('select[code]');
+			var arrstr = "";
+			codeSelectArr.each(function(){
+				arrstr +=$(this).attr('code') + ",";
+		    });
+			if(arrstr == ''){
+				initTable();
+			}else{
+				arrstr = arrstr.substring(0,arrstr.length - 1);
+				console.log(arrstr);
+				return;
+				 pro.callServer("sysCodeService", "getAllCode",{code : arrstr} , function(res) {
+						if (res.data.state == "1") {
+							 
+							
+						} else {
+							
+						}
+						initTable();
+				}); 
+			}
+		
+			
+		}
+		
+		//初始化
+		init();
 		
 		//监听查询
 		window.search = function(){

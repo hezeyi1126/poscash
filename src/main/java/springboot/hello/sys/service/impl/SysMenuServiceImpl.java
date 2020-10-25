@@ -65,6 +65,14 @@ public class SysMenuServiceImpl implements SysMenuService {
     	paramObject.setMsg(  "保存成功");
         return entity;
     }
+    
+    public Object list(ParamObject<SysMenu> paramObject) throws Exception{
+    	BeanUtil.buildEntity(SysMenu.class, paramObject);
+        return 	sysMenuDao.select(paramObject.getEntity());
+    }
+    
+    
+
 
 
 

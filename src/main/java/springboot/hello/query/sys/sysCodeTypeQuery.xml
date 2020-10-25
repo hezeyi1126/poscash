@@ -12,8 +12,8 @@
 		      CREATE_TIME as createTime		
 		FROM SYS_CODE_TYPE
 		WHERE 1=1
-		 [@codeTypeName; AND CODE_TYPE_NAME = '{#codeTypeName}' ]
-		 [@codeTypeCode; AND CODE_TYPE_CODE = '{#codeTypeCode}' ]
+		 [@codeTypeName; AND CODE_TYPE_NAME like '%{#codeTypeName}%' ]
+		 [@codeTypeCode; AND CODE_TYPE_CODE like '%{#codeTypeCode}%' ]
 		]]>
 		
 	</sql>

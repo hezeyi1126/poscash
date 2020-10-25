@@ -24,6 +24,12 @@ public class SysMenu implements Serializable {
          private String menuId; 
          
         /**
+         *上级菜单
+         */
+         @Column(name="PARENT_ID")
+         private String parentId;
+         
+        /**
          *是否可用 1可用 0不可用
          */
          @Column(name="IS_AVIABLE")
@@ -79,6 +85,13 @@ public class SysMenu implements Serializable {
 
         public void setMenuId(String menuId) {
             this.menuId = menuId;
+        }
+        public String getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
         }
         public BigDecimal getIsAviable() {
             return isAviable;

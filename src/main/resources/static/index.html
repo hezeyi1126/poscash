@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/fontAlibaba/iconfont.css">
         <link rel="stylesheet" href="/css/xadmin.css">
       <!--   <link rel="stylesheet" href="./css/theme6.css"> -->
+        <script src="/js/axios.min.js" charset="utf-8"></script>
         <script src="/lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="/js/xadmin.js"></script>
         <script type="text/javascript" src="/js/tools.js"></script>
@@ -44,7 +45,7 @@
                                 <i class="iconfont">&#xe6a2;</i>弹出最大化</a></dd>
                         <dd>
                             <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">
-                                <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>
+                                <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd> 
                         <dd>
                             <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">
                                 <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>
@@ -105,107 +106,6 @@
         <div class="left-nav">
             <div id="side-nav">
                 <ul id="nav">
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="工作台">&#xe6fc;</i>
-                            <cite>工作台</cite>
-                            <i class="iconfont nav_right">&#xe697;</i>
-                        </a>
-
-                         <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('菜单设置','sys/html/sysMenu.html')">
-                                    <cite>菜单设置</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('我发起的','launch.html')">
-                                    <cite>我发起的</cite></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="竞拍管理">&#xe701;</i>
-                            <cite>竞拍管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('项目管理','project_management.html')">
-                                    <cite>项目管理</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('项目审核','project_audit.html')">
-                                    <cite>项目审核</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('资料审核','data_audit.html')">
-                                    <cite>资料审核</cite></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('交易中心','trading_center.html')">
-                            <i class="iconfont left-nav-li" lay-tips="交易中心管理">&#xe709;</i>
-                            <cite>交易中心管理</cite>
-                            <!-- <i class="iconfont nav_right">&#xe697;</i> -->
-                        </a>
-                        <!-- <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('交易中心','trading_center.html')">
-                                    <cite>交易中心</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('新增交易中心','add_trading_center.html')">
-                                    <cite>新增交易中心</cite></a>
-                            </li>
-                        </ul> -->
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="用户管理">&#xe702;</i>
-                            <cite>用户管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('用户列表','userlist.html')">
-                                    <cite>用户列表</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('角色列表','rolelist.html')">
-                                    <cite>角色列表</cite></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('信息管理','information_management.html')">
-                            <i class="iconfont left-nav-li" lay-tips="信息管理">&#xe708;</i>
-                            <cite>信息管理</cite>
-                            <!-- <i class="iconfont nav_right">&#xe697;</i> -->
-                        </a>
-                        <ul class="sub-menu">
-                           
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('新闻资讯','news_information.html')">
-                            <i class="iconfont left-nav-li" lay-tips="新闻资讯">&#xe706;</i>
-                            <cite>新闻资讯</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('广告位管理','adsense.html')">
-                            <i class="iconfont left-nav-li" lay-tips="广告位管理">&#xe700;</i>
-                            <cite>广告位管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" onclick="xadmin.add_tab('友情链接','friendship_link.html')">
-                            <i class="iconfont left-nav-li" lay-tips="友情链接">&#xe707;</i>
-                            <cite>友情链接</cite>
-                        </a>
-                    </li>
-                  
                 </ul>
             </div>
         </div>
@@ -229,7 +129,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <!-- welcome -->
-                        <iframe src='/sys/html/sysMenu.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                        <iframe src='' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
                 </div>
                 <div id="tab_show"></div>
@@ -255,6 +155,36 @@
 <script>layui.use(['laydate', 'form', 'upload'],
         function() {
             var $ = layui.jquery
+            
+            pro.callServer("sysMenuService", "list",{},function(res){
+				if(res.data.state == '1'){
+					var nav = $('#nav').empty();
+					var data = res.data.data;
+					//添加主菜单
+					for(var i in data){
+						if(data[i].menuType == '1'){
+							var li = $('<li>');
+							nav.append(li);
+							li.append('<a href="javascript:;"><i class="iconfont left-nav-li" lay-tips="'+ data[i].menuName +'">&#xe6fc;</i><cite>'+ data[i].menuName +'</cite><i class="iconfont nav_right">&#xe697;</i></a>');
+							var count = 0;
+							var sub = '<ul class="sub-menu">';
+							//添加子菜单
+							for(var j in data){
+								count++;
+								if(data[j].parentId == data[i].menuId){
+									sub +='<li> <a onclick="xadmin.add_tab(\''+ data[j].menuName +'\',\''+ data[j].menuUrl +'\')">'+ data[j].menuName +' </a></li>';
+								}
+							}
+							sub +='</ul>';
+							if(count > 0){
+								li.append(sub);
+							}
+						}
+						
+						
+					}
+				}
+			});
             
             $(".layui-tab-title li").click(function() {
                 console.log($(this));
