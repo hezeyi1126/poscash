@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
-* Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
 */
 @org.apache.ibatis.annotations.Mapper
 public interface SysCodeDao extends Mapper<SysCode>{

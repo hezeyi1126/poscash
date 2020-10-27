@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query queryId="busGoodsQuery">
+	<sql>
+		<![CDATA[
+		SELECT  
+		      GOODS_ID as goodsId,
+		      TYPE_ID as typeId,
+		      GOODS_NAME as goodsName,
+		      BAR_CODE as barCode,
+		      GOODS_CODE as goodsCode,
+		      SPECE as spece,
+		      PINYIN as pinyin,
+		      RESERVE as reserve,
+		      UNIT_CODE as unitCode,
+		      STOCK_PRICE as stockPrice,
+		      SELL_PRICE as sellPrice,
+		      PLENTY_SELL_PRICE as plentySellPrice,
+		      MEMBER_PRICE as memberPrice,
+		      IS_MEMBER_REBATE as isMemberRebate,
+		      SUPPLIER_ID as supplierId,
+		      PREDUCE_DATE as preduceDate,
+		      QUALITY_DAYS as qualityDays,
+		      IS_MULTY_CODE as isMultyCode,
+		      IS_NO_RESERVE as isNoReserve,
+		      IS_AVIABLE as isAviable,
+		      SORT_FLAG as sortFlag,
+		      REMARK as remark,
+		      CREATE_USER_ID as createUserId,
+		      CREATE_TIME as createTime		
+		FROM BUS_GOODS
+		WHERE 1=1
+		 [@goodsName; AND GOODS_NAME = '{#goodsName}' ]
+		]]>
+		
+	</sql>
+	
+	<table>
+		<head>
+				<td type="checkbox" fixed="left"  totalRowText='合计' />
+		     	<td field="goodsId" column="GOODS_ID" title="商品ID" hide="true"></td>
+		     	<td field="typeId" column="TYPE_ID" title="类型ID" ></td>
+		     	<td field="goodsName" column="GOODS_NAME" title="商品名称" ></td>
+		     	<td field="barCode" column="BAR_CODE" title="条码" ></td>
+		     	<td field="goodsCode" column="GOODS_CODE" title="货号" ></td>
+		     	<td field="spece" column="SPECE" title="规格" ></td>
+		     	<td field="pinyin" column="PINYIN" title="拼音" ></td>
+		     	<td field="reserve" column="RESERVE" title="库存" ></td>
+		     	<td field="unitCode" column="UNIT_CODE" title="主单位 对应编码表单位" ></td>
+		     	<td field="stockPrice" column="STOCK_PRICE" title="进货价" ></td>
+		     	<td field="sellPrice" column="SELL_PRICE" title="销售价" ></td>
+		     	<td field="plentySellPrice" column="PLENTY_SELL_PRICE" title="批发价" ></td>
+		     	<td field="memberPrice" column="MEMBER_PRICE" title="会员价" ></td>
+		     	<td field="isMemberRebate" column="IS_MEMBER_REBATE" title="是否会员折扣1是0否" ></td>
+		     	<td field="supplierId" column="SUPPLIER_ID" title="供应商" ></td>
+		     	<td field="preduceDate" column="PREDUCE_DATE" title="生产日期" ></td>
+		     	<td field="qualityDays" column="QUALITY_DAYS" title="保质期 单位-天" ></td>
+		     	<td field="isMultyCode" column="IS_MULTY_CODE" title="一品多码 1是0否" ></td>
+		     	<td field="isNoReserve" column="IS_NO_RESERVE" title="是否不计库存1是 0 否" ></td>
+		     	<td field="isAviable" column="IS_AVIABLE" title="是否可用 1可用 0不可用" ></td>
+		     	<td field="sortFlag" column="SORT_FLAG" title="排序" ></td>
+		     	<td field="remark" column="REMARK" title="备注" ></td>
+		     	<td field="createUserId" column="CREATE_USER_ID" title="创建人" hide="true"></td>
+		     	<td field="createTime" column="CREATE_TIME" title="创建时间" hide="true"></td>
+		    	<td  title="操作" templet="#editpane" ></td>
+		</head>
+	</table>
+	
+	
+</query>

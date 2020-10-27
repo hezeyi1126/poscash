@@ -26,7 +26,17 @@
 					<!-- 查询面板 👇-->
 					<form class="layui-form" action="">
 						<div class="layui-card-body " id="searchPane">
-
+	
+							<div class="layui-input-inline layui-show-xs-block">
+								<input type="text"  name="nemuName" placeholder="菜单名称"
+							    	autocomplete="off" class="layui-input">
+							</div>
+							
+							<div class="layui-input-inline layui-show-xs-block">
+								<select name="menuType" code="MENU_TYPE" >
+								</select>
+							</div>
+							
 							<div class="layui-input-inline lafite_search layui-show-xs-block">
 								<button type="button" class="layui-btn  " onclick="search()">
 
@@ -66,29 +76,32 @@
 			<form class="layui-form" id="editform">
 				<input type="hidden" name="menuId" />
 				<div class="layui-form-item">
-					<label for="L_email" class="layui-form-label"> <span
-						class="x-red">*</span> 是否可用 1可用 0不可用
-					</label>
+					<label class="layui-form-label"> 上级菜单</label>
 					<div class="layui-input-block lafite_width_60">
-						<input type="text" id="isAviable" name="isAviable"
-							lay-verify="required" autocomplete="off" class="layui-input">
+						<select name="parentId">
+						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"> 菜单类型 1 主菜单 2组 3 子菜单</label>
+					<label class="layui-form-label"> <span class="x-red">*</span>
+						是否可用 
+					</label>
 					<div class="layui-input-block lafite_width_60">
-						<select name="menuType">
-							<option value="2">用户状态</option>
-							<option value="3">支付宝</option>
-							<option value="4">微信</option>
-							<option value="5">货到付款</option>
+						<select code="YESorNO" name="isAviable" lay-verify="required" withnull="YES">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"><span class="x-red">*</span> 菜单类型 </label>
+					<div class="layui-input-block lafite_width_60">
+						<select code="MENU_TYPE" name="menuType" lay-verify="required" withnull="YES">
 						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label for="L_email" class="layui-form-label"> 菜单名称 </label>
 					<div class="layui-input-block lafite_width_60">
-						<input type="text" id="menuName" name="menuName"
+						<input type="text" id="menuName" name="menuName" lay-verify="required"
 							autocomplete="off" class="layui-input">
 					</div>
 				</div>
@@ -115,14 +128,8 @@
 							lay-verify="required" autocomplete="off" class="layui-input">
 					</div>
 				</div>
-				<input type="hidden" name="createUserId" />
-				<div class="layui-form-item">
-					<label class="layui-form-label"> 创建时间</label>
-					<div class="layui-input-inline">
-						<input type="text" class="layui-input" inputtype="date"
-							name="createTime" placeholder="yyyy-MM-dd">
-					</div>
-				</div>
+				<input type="hidden" name="createUserId" /> <input type="hidden"
+					name="createTime" />
 
 
 
@@ -132,9 +139,6 @@
 							onclick="back()">取消</div>
 						<button lay-submit lay-filter="subform"
 							class="lafite-layui-btn2 lafite_margin_left_10 lafite_height_35px">保存</button>
-							
-							<button type="button" onclick="setval();"
-							class="lafite-layui-btn2 lafite_margin_left_10 lafite_height_35px">设置</button>
 					</div>
 				</div>
 
@@ -151,18 +155,12 @@
 
 </body>
 <script>
-	function setval(select , val){
-	//	$("#editform").find("[name='menuType']").find("option[value='"+ 2 +"']").prop("selected",true);
-		
-	}
-	
-	
 	var loadingtype = 3;
 	var service = "sysMenuService"
 	var queryid = "sysMenuQuery"
 	var cmd = "add";//默认为添加 可以为edit
 	$(document).ready(function() {
-
+		
 	});
 
 	layui.use([ 'form', 'table', 'laypage','laydate' ], function() {
@@ -195,15 +193,16 @@
 			 console.log(params);
 			initTable(params);
 		}
+		
 		//填充表单
 		 window.fillForm =function (obj){
+		 var eform = $("#editform");
 			for(var name in obj){
 			//$("input")
-				$("#editform").find("[name='"+ name +"']").val(obj[name]);
+				eform.find("[name='"+ name +"']").val(obj[name]);
 			}
 			form.render();
 		}
-		
 		
 		//监听提交
 		form.on('submit(subform)', function(data) {
@@ -223,7 +222,57 @@
 		
 		 //初始化table↓
 		initTable();
+		
 		//初始化table↑
+		
+		window.init = function(){
+			//初始化
+			pro.callServer("sysMenuService", "list",{isAviable : 1, menuType : 1} , function(res) {
+				if (res.data.state == "1") {
+					var typeSelect = $('#editPane').find('[name=parentId]');
+					var searchrtypeSelect = $('#searchPane').find('[name=parentId]');
+					typeSelect.append('<option value="">请选择</option>');
+					searchrtypeSelect.append('<option value="">请选择</option>');
+					for(var i in  res.data.data){
+						typeSelect.append('<option value="'+ res.data.data[i].menuId +'">'+ res.data.data[i].menuName +'</option>');
+						searchrtypeSelect.append('<option value="'+ res.data.data[i].menuId +'">'+ res.data.data[i].menuName +'</option>');
+					} 
+					form.render();
+				} else {
+					
+				}
+			});
+			//查询所有带code的select
+			var codeSelectArr = $('select[code]');
+			var arrstr = "";
+			codeSelectArr.each(function(){
+				arrstr +=$(this).attr('code') + ",";
+		    });
+			if(arrstr != ''){
+				arrstr = arrstr.substring(0,arrstr.length - 1);
+				 pro.callServer("sysCodeService", "getAllCode",{code : arrstr} , function(res) {
+						if (res.data.state == "1") {
+							var data = res.data.data;
+							codeSelectArr.each(function(){
+								for(var i in data){
+									if($(this).attr('code') == i){
+										$(this).append('<option value>请选择</option>');
+										for(var j in data[i]){
+											$(this).append('<option value="'+ data[i][j].codeVal +'">'+ data[i][j].code +'</option>');
+										}
+										
+									}
+								}
+						    });
+							form.render();
+						} else {
+							
+						}
+				}); 
+			}
+		}
+		
+		init();
 		
 		function initTable(params){
 			//console.log(params);
@@ -233,6 +282,7 @@
 			 }
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer("queryService", "queryById", params, function(res) {
+			
 				layer.close(loadindex);
 				//layer.msg(res.msg);
 				if (res.state == "1") {
@@ -336,6 +386,7 @@
 	function clearForm(){
 		$("#editform input,select,textarea").val("");
 	}
+	
 
 	/*编辑*/
 	function edit( id) {

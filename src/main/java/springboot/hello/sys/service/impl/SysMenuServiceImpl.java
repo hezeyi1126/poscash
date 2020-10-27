@@ -12,10 +12,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CachePut;
 import springboot.hello.entity.base.ParamObject;
 import springboot.hello.util.BeanUtil;
+import tk.mybatis.mapper.entity.Example;
+
 import java.util.List;
 
 /**
-* Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
 */
 @Service("sysMenuService")
 public class SysMenuServiceImpl implements SysMenuService {
@@ -64,6 +66,13 @@ public class SysMenuServiceImpl implements SysMenuService {
     	sysMenuDao.updateByPrimaryKey(entity);
     	paramObject.setMsg(  "保存成功");
         return entity;
+    }
+    
+    public Object list(ParamObject<SysMenu> paramObject) throws Exception{
+    	BeanUtil.buildEntity(SysMenu.class, paramObject);
+    	Example example = new Example(SysMenu.class);
+    	example.orderBy("sortFlag");
+        return 	sysMenuDao.selectByExample(example);
     }
 
 

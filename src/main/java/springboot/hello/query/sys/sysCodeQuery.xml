@@ -3,22 +3,22 @@
 	<sql>
 		<![CDATA[
 		SELECT
-			( SELECT CODE_TYPE_CODE FROM SYS_CODE_TYPE a WHERE a.CODE_TYPE_ID = CODE_TYPE_ID ) AS CODE_TYPE_CODE,
+			b.CODE_TYPE_CODE AS CODE_TYPE_CODE,
 			CODE_ID AS codeId,
-			( SELECT CODE_TYPE_NAME FROM SYS_CODE_TYPE a WHERE a.CODE_TYPE_ID = CODE_TYPE_ID ) AS CODE_TYPE_NAME,
+			b.CODE_TYPE_NAME AS CODE_TYPE_NAME,
 			code AS code,
-			CODE_VAL AS codeVal,
-			( CASE IS_AVIABLE WHEN 1 THEN '可用' ELSE '停用' END )  AS isAviable,
-			SORT_FLAG AS sortFlag,
-			CREATE_USER_ID AS createUserId,
-			CREATE_TIME AS createTime 
+			a.CODE_VAL AS codeVal,
+			( CASE a.IS_AVIABLE WHEN 1 THEN '可用' ELSE '停用' END )  AS isAviable,
+			a.SORT_FLAG AS sortFlag,
+			a.CREATE_USER_ID AS createUserId,
+			a.CREATE_TIME AS createTime 
 		FROM
-			SYS_CODE 
+			SYS_CODE a, SYS_CODE_TYPE b
 		WHERE
-			1 =1
-		 [@code; AND code = '{#code}' ]
-		 [@codeTypeId; AND CODE_TYPE_ID = '{#codeTypeId}' ]
-		 ORDER BY SORT_FLAG
+			a.CODE_TYPE_ID = b.CODE_TYPE_ID
+		 [@code; AND b.CODE_TYPE_CODE like '%{#code}%' ]
+		 [@name; AND b.CODE_TYPE_NAME like '%{#name}%' ]
+		 ORDER BY a.SORT_FLAG
 		]]>
 	</sql>
 	

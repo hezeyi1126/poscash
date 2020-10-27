@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>用户列表</title>
+<title>编码设置</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -26,14 +26,14 @@
 					<!-- 查询面板 👇-->
 					<form class="layui-form" action="">
 						<div class="layui-card-body " id="searchPane">
-							<!-- <div class="layui-input-inline layui-show-xs-block">
+							 <div class="layui-input-inline layui-show-xs-block">
 								<input type="text"  name="code" placeholder="类型编码"
 							    	autocomplete="off" class="layui-input">
-							</div> -->
+							</div> 
 							
 							<div class="layui-input-inline layui-show-xs-block">
-								<select name="codeTypeId">
-								</select>
+								<input type="text"  name="name" placeholder="类型名称"
+							    	autocomplete="off" class="layui-input">
 							</div>
 
 
@@ -80,7 +80,7 @@
 						编码类型
 					</label>
 					<div class="layui-input-block lafite_width_60">
-						<select name="codeTypeId" lay-verify="required">
+						<select name="codeTypeId" lay-verify="required" >
 						
 						</select>
 					</div>
@@ -167,36 +167,64 @@
 		var tableIns;
 		var params = new Object();//查询参数
 		
+		initTable();
 		//初始化
-			pro.callServer("sysCodeTypeService", "list",{} , function(res) {
-				console.log(res);
-				if (res.data.state == "1") {
-					var typeSelect = $('#editPane').find('[name=codeTypeId]');
-					var searchrtypeSelect = $('#searchPane').find('[name=codeTypeId]');
-					typeSelect.append('<option value="">请选择</option>');
-					searchrtypeSelect.append('<option value="">请选择</option>');
-					for(var i in  res.data.data){
-						typeSelect.append('<option value="'+ res.data.data[i].codeTypeId +'">'+ res.data.data[i].codeTypeName +'</option>');
-						searchrtypeSelect.append('<option value="'+ res.data.data[i].codeTypeId +'">'+ res.data.data[i].codeTypeName +'</option>');
-					} 
-					
-					form.render();
-					
-					 //初始化table↓
-					initTable();
-				} else {
-					
-				}
-			});
+		pro.callServer("sysCodeTypeService", "list",{} , function(res) {
+			console.log(res);
+			if (res.data.state == "1") {
+				var typeSelect = $('#editPane').find('[name=codeTypeId]');
+				var searchrtypeSelect = $('#searchPane').find('[name=codeTypeId]');
+				typeSelect.append('<option value="">请选择</option>');
+				searchrtypeSelect.append('<option value="">请选择</option>');
+				for(var i in  res.data.data){
+					typeSelect.append('<option value="'+ res.data.data[i].codeTypeId +'">'+ res.data.data[i].codeTypeName +'</option>');
+					searchrtypeSelect.append('<option value="'+ res.data.data[i].codeTypeId +'">'+ res.data.data[i].codeTypeName +'</option>');
+				} 
+				
+				form.render();
+			} else {
+				
+			}
+		});
 		
 		
 		 //同时绑定多个
-		  lay('[inputtype=date]').each(function(){
+		  $('[inputtype=date]').each(function(){
 		    laydate.render({
 		      elem: this
 		      ,trigger: 'click'
 		    });
 		  });
+			
+		window.init = function(){
+			//查询所有带code的select
+			var codeSelectArr = $('select[code]');
+			var arrstr = "";
+			codeSelectArr.each(function(){
+				arrstr +=$(this).attr('code') + ",";
+		    });
+			if(arrstr != ''){
+				arrstr = arrstr.substring(0,arrstr.length - 1);
+				 pro.callServer("sysCodeService", "getAllCode",{code : arrstr} , function(res) {
+						if (res.data.state == "1") {
+							var data = res.data.data;
+							codeSelectArr.each(function(){
+								for(var i in data){
+									if($(this).attr('code') == i){
+										for(var j in data[i]){
+											$(this).append('<option value="'+ data[i][j].codeVal +'">'+ data[i][j].code +'</option>');
+										}
+										
+									}
+								}
+						    });
+							form.render();
+						} else {
+							
+						}
+				}); 
+			}
+		}
 		
 		//监听查询
 		window.search = function(){
@@ -250,6 +278,7 @@
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer("queryService", "queryById", params, function(res) {
 				layer.close(loadindex);
+				init();
 				//layer.msg(res.data.msg);
 				if (res.data.state == "1") {
 					//console.log(res);

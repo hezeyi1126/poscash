@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
+-->
+<mapper namespace="springboot.hello.bus.dao.BusGoodsDao">
+    <resultMap id="busgoods" type="springboot.hello.bus.entity.BusGoods">
+            <id property="goodsId" column="GOODS_ID"/>
+            <result property="typeId" column="TYPE_ID"/>
+            <result property="goodsName" column="GOODS_NAME"/>
+            <result property="barCode" column="BAR_CODE"/>
+            <result property="goodsCode" column="GOODS_CODE"/>
+            <result property="spece" column="SPECE"/>
+            <result property="pinyin" column="PINYIN"/>
+            <result property="reserve" column="RESERVE"/>
+            <result property="unitCode" column="UNIT_CODE"/>
+            <result property="stockPrice" column="STOCK_PRICE"/>
+            <result property="sellPrice" column="SELL_PRICE"/>
+            <result property="plentySellPrice" column="PLENTY_SELL_PRICE"/>
+            <result property="memberPrice" column="MEMBER_PRICE"/>
+            <result property="isMemberRebate" column="IS_MEMBER_REBATE"/>
+            <result property="supplierId" column="SUPPLIER_ID"/>
+            <result property="preduceDate" column="PREDUCE_DATE"/>
+            <result property="qualityDays" column="QUALITY_DAYS"/>
+            <result property="isMultyCode" column="IS_MULTY_CODE"/>
+            <result property="isNoReserve" column="IS_NO_RESERVE"/>
+            <result property="isAviable" column="IS_AVIABLE"/>
+            <result property="sortFlag" column="SORT_FLAG"/>
+            <result property="remark" column="REMARK"/>
+            <result property="createUserId" column="CREATE_USER_ID"/>
+            <result property="createTime" column="CREATE_TIME"/>
+    </resultMap>
+
+    <sql id="columns">
+            `GOODS_ID` ,`TYPE_ID` ,`GOODS_NAME` ,`BAR_CODE` ,`GOODS_CODE` ,`SPECE` ,`PINYIN` ,`RESERVE` ,`UNIT_CODE` ,`STOCK_PRICE` ,`SELL_PRICE` ,`PLENTY_SELL_PRICE` ,`MEMBER_PRICE` ,`IS_MEMBER_REBATE` ,`SUPPLIER_ID` ,`PREDUCE_DATE` ,`QUALITY_DAYS` ,`IS_MULTY_CODE` ,`IS_NO_RESERVE` ,`IS_AVIABLE` ,`SORT_FLAG` ,`REMARK` ,`CREATE_USER_ID` ,`CREATE_TIME`
+    </sql>
+
+    <insert id="insert">
+    	<selectKey keyProperty="goodsId" resultType="string" order="BEFORE">    
+	            select uuid() as id from dual  
+	    </selectKey> 
+        insert into `BUS_GOODS`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                `GOODS_ID`,
+            </if>
+            <if test="typeId != null">
+                `TYPE_ID`,
+            </if>
+            <if test="goodsName != null">
+                `GOODS_NAME`,
+            </if>
+            <if test="barCode != null">
+                `BAR_CODE`,
+            </if>
+            <if test="goodsCode != null">
+                `GOODS_CODE`,
+            </if>
+            <if test="spece != null">
+                `SPECE`,
+            </if>
+            <if test="pinyin != null">
+                `PINYIN`,
+            </if>
+            <if test="reserve != null">
+                `RESERVE`,
+            </if>
+            <if test="unitCode != null">
+                `UNIT_CODE`,
+            </if>
+            <if test="stockPrice != null">
+                `STOCK_PRICE`,
+            </if>
+            <if test="sellPrice != null">
+                `SELL_PRICE`,
+            </if>
+            <if test="plentySellPrice != null">
+                `PLENTY_SELL_PRICE`,
+            </if>
+            <if test="memberPrice != null">
+                `MEMBER_PRICE`,
+            </if>
+            <if test="isMemberRebate != null">
+                `IS_MEMBER_REBATE`,
+            </if>
+            <if test="supplierId != null">
+                `SUPPLIER_ID`,
+            </if>
+            <if test="preduceDate != null">
+                `PREDUCE_DATE`,
+            </if>
+            <if test="qualityDays != null">
+                `QUALITY_DAYS`,
+            </if>
+            <if test="isMultyCode != null">
+                `IS_MULTY_CODE`,
+            </if>
+            <if test="isNoReserve != null">
+                `IS_NO_RESERVE`,
+            </if>
+            <if test="isAviable != null">
+                `IS_AVIABLE`,
+            </if>
+            <if test="sortFlag != null">
+                `SORT_FLAG`,
+            </if>
+            <if test="remark != null">
+                `REMARK`,
+            </if>
+            <if test="createUserId != null">
+                `CREATE_USER_ID`,
+            </if>
+            <if test="createTime != null">
+                `CREATE_TIME`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+            #{goodsId} ,
+            </if>
+            <if test="typeId != null">
+            #{typeId} ,
+            </if>
+            <if test="goodsName != null">
+            #{goodsName} ,
+            </if>
+            <if test="barCode != null">
+            #{barCode} ,
+            </if>
+            <if test="goodsCode != null">
+            #{goodsCode} ,
+            </if>
+            <if test="spece != null">
+            #{spece} ,
+            </if>
+            <if test="pinyin != null">
+            #{pinyin} ,
+            </if>
+            <if test="reserve != null">
+            #{reserve} ,
+            </if>
+            <if test="unitCode != null">
+            #{unitCode} ,
+            </if>
+            <if test="stockPrice != null">
+            #{stockPrice} ,
+            </if>
+            <if test="sellPrice != null">
+            #{sellPrice} ,
+            </if>
+            <if test="plentySellPrice != null">
+            #{plentySellPrice} ,
+            </if>
+            <if test="memberPrice != null">
+            #{memberPrice} ,
+            </if>
+            <if test="isMemberRebate != null">
+            #{isMemberRebate} ,
+            </if>
+            <if test="supplierId != null">
+            #{supplierId} ,
+            </if>
+            <if test="preduceDate != null">
+            #{preduceDate} ,
+            </if>
+            <if test="qualityDays != null">
+            #{qualityDays} ,
+            </if>
+            <if test="isMultyCode != null">
+            #{isMultyCode} ,
+            </if>
+            <if test="isNoReserve != null">
+            #{isNoReserve} ,
+            </if>
+            <if test="isAviable != null">
+            #{isAviable} ,
+            </if>
+            <if test="sortFlag != null">
+            #{sortFlag} ,
+            </if>
+            <if test="remark != null">
+            #{remark} ,
+            </if>
+            <if test="createUserId != null">
+            #{createUserId} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `BUS_GOODS`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="goodsId != null">
+                and `GOODS_ID` = #{goodsId}
+            </if>
+            <if test="typeId != null">
+                and `TYPE_ID` = #{typeId}
+            </if>
+            <if test="goodsName != null">
+                and `GOODS_NAME` = #{goodsName}
+            </if>
+            <if test="barCode != null">
+                and `BAR_CODE` = #{barCode}
+            </if>
+            <if test="goodsCode != null">
+                and `GOODS_CODE` = #{goodsCode}
+            </if>
+            <if test="spece != null">
+                and `SPECE` = #{spece}
+            </if>
+            <if test="pinyin != null">
+                and `PINYIN` = #{pinyin}
+            </if>
+            <if test="reserve != null">
+                and `RESERVE` = #{reserve}
+            </if>
+            <if test="unitCode != null">
+                and `UNIT_CODE` = #{unitCode}
+            </if>
+            <if test="stockPrice != null">
+                and `STOCK_PRICE` = #{stockPrice}
+            </if>
+            <if test="sellPrice != null">
+                and `SELL_PRICE` = #{sellPrice}
+            </if>
+            <if test="plentySellPrice != null">
+                and `PLENTY_SELL_PRICE` = #{plentySellPrice}
+            </if>
+            <if test="memberPrice != null">
+                and `MEMBER_PRICE` = #{memberPrice}
+            </if>
+            <if test="isMemberRebate != null">
+                and `IS_MEMBER_REBATE` = #{isMemberRebate}
+            </if>
+            <if test="supplierId != null">
+                and `SUPPLIER_ID` = #{supplierId}
+            </if>
+            <if test="preduceDate != null">
+                and `PREDUCE_DATE` = #{preduceDate}
+            </if>
+            <if test="qualityDays != null">
+                and `QUALITY_DAYS` = #{qualityDays}
+            </if>
+            <if test="isMultyCode != null">
+                and `IS_MULTY_CODE` = #{isMultyCode}
+            </if>
+            <if test="isNoReserve != null">
+                and `IS_NO_RESERVE` = #{isNoReserve}
+            </if>
+            <if test="isAviable != null">
+                and `IS_AVIABLE` = #{isAviable}
+            </if>
+            <if test="sortFlag != null">
+                and `SORT_FLAG` = #{sortFlag}
+            </if>
+            <if test="remark != null">
+                and `REMARK` = #{remark}
+            </if>
+            <if test="createUserId != null">
+                and `CREATE_USER_ID` = #{createUserId}
+            </if>
+            <if test="createTime != null">
+                and `CREATE_TIME` = #{createTime}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `BUS_GOODS`
+        where `GOODS_ID` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `BUS_GOODS`
+        <set>
+                <if test="typeId != null">
+                    `TYPE_ID` = #{typeId},
+                </if>
+                <if test="goodsName != null">
+                    `GOODS_NAME` = #{goodsName},
+                </if>
+                <if test="barCode != null">
+                    `BAR_CODE` = #{barCode},
+                </if>
+                <if test="goodsCode != null">
+                    `GOODS_CODE` = #{goodsCode},
+                </if>
+                <if test="spece != null">
+                    `SPECE` = #{spece},
+                </if>
+                <if test="pinyin != null">
+                    `PINYIN` = #{pinyin},
+                </if>
+                <if test="reserve != null">
+                    `RESERVE` = #{reserve},
+                </if>
+                <if test="unitCode != null">
+                    `UNIT_CODE` = #{unitCode},
+                </if>
+                <if test="stockPrice != null">
+                    `STOCK_PRICE` = #{stockPrice},
+                </if>
+                <if test="sellPrice != null">
+                    `SELL_PRICE` = #{sellPrice},
+                </if>
+                <if test="plentySellPrice != null">
+                    `PLENTY_SELL_PRICE` = #{plentySellPrice},
+                </if>
+                <if test="memberPrice != null">
+                    `MEMBER_PRICE` = #{memberPrice},
+                </if>
+                <if test="isMemberRebate != null">
+                    `IS_MEMBER_REBATE` = #{isMemberRebate},
+                </if>
+                <if test="supplierId != null">
+                    `SUPPLIER_ID` = #{supplierId},
+                </if>
+                <if test="preduceDate != null">
+                    `PREDUCE_DATE` = #{preduceDate},
+                </if>
+                <if test="qualityDays != null">
+                    `QUALITY_DAYS` = #{qualityDays},
+                </if>
+                <if test="isMultyCode != null">
+                    `IS_MULTY_CODE` = #{isMultyCode},
+                </if>
+                <if test="isNoReserve != null">
+                    `IS_NO_RESERVE` = #{isNoReserve},
+                </if>
+                <if test="isAviable != null">
+                    `IS_AVIABLE` = #{isAviable},
+                </if>
+                <if test="sortFlag != null">
+                    `SORT_FLAG` = #{sortFlag},
+                </if>
+                <if test="remark != null">
+                    `REMARK` = #{remark},
+                </if>
+                <if test="createUserId != null">
+                    `CREATE_USER_ID` = #{createUserId},
+                </if>
+                <if test="createTime != null">
+                    `CREATE_TIME` = #{createTime},
+                </if>
+        </set>
+        where `GOODS_ID` = #{goodsId}
+    </update>
+
+    <select id="getById" resultMap="busgoods">
+        select
+        <include refid="columns" />
+        from `BUS_GOODS`
+        where `GOODS_ID` =  #{id}
+    </select>
+
+    <select id="list" resultMap="busgoods">
+        select
+        <include refid="columns" />
+        from `BUS_GOODS`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="goodsId != null">
+                and `GOODS_ID` = #{goodsId}
+            </if>
+            <if test="typeId != null">
+                and `TYPE_ID` = #{typeId}
+            </if>
+            <if test="goodsName != null">
+                and `GOODS_NAME` = #{goodsName}
+            </if>
+            <if test="barCode != null">
+                and `BAR_CODE` = #{barCode}
+            </if>
+            <if test="goodsCode != null">
+                and `GOODS_CODE` = #{goodsCode}
+            </if>
+            <if test="spece != null">
+                and `SPECE` = #{spece}
+            </if>
+            <if test="pinyin != null">
+                and `PINYIN` = #{pinyin}
+            </if>
+            <if test="reserve != null">
+                and `RESERVE` = #{reserve}
+            </if>
+            <if test="unitCode != null">
+                and `UNIT_CODE` = #{unitCode}
+            </if>
+            <if test="stockPrice != null">
+                and `STOCK_PRICE` = #{stockPrice}
+            </if>
+            <if test="sellPrice != null">
+                and `SELL_PRICE` = #{sellPrice}
+            </if>
+            <if test="plentySellPrice != null">
+                and `PLENTY_SELL_PRICE` = #{plentySellPrice}
+            </if>
+            <if test="memberPrice != null">
+                and `MEMBER_PRICE` = #{memberPrice}
+            </if>
+            <if test="isMemberRebate != null">
+                and `IS_MEMBER_REBATE` = #{isMemberRebate}
+            </if>
+            <if test="supplierId != null">
+                and `SUPPLIER_ID` = #{supplierId}
+            </if>
+            <if test="preduceDate != null">
+                and `PREDUCE_DATE` = #{preduceDate}
+            </if>
+            <if test="qualityDays != null">
+                and `QUALITY_DAYS` = #{qualityDays}
+            </if>
+            <if test="isMultyCode != null">
+                and `IS_MULTY_CODE` = #{isMultyCode}
+            </if>
+            <if test="isNoReserve != null">
+                and `IS_NO_RESERVE` = #{isNoReserve}
+            </if>
+            <if test="isAviable != null">
+                and `IS_AVIABLE` = #{isAviable}
+            </if>
+            <if test="sortFlag != null">
+                and `SORT_FLAG` = #{sortFlag}
+            </if>
+            <if test="remark != null">
+                and `REMARK` = #{remark}
+            </if>
+            <if test="createUserId != null">
+                and `CREATE_USER_ID` = #{createUserId}
+            </if>
+            <if test="createTime != null">
+                and `CREATE_TIME` = #{createTime}
+            </if>
+        </trim>
+    </select>
+</mapper>

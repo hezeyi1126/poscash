@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
+-->
+<mapper namespace="springboot.hello.bus.dao.BusGoodsTypeDao">
+    <resultMap id="busgoodstype" type="springboot.hello.bus.entity.BusGoodsType">
+            <id property="typeId" column="TYPE_ID"/>
+            <result property="typeName" column="TYPE_NAME"/>
+            <result property="parentId" column="PARENT_ID"/>
+            <result property="isAviable" column="IS_AVIABLE"/>
+            <result property="sortFlag" column="SORT_FLAG"/>
+            <result property="createUserId" column="CREATE_USER_ID"/>
+            <result property="createTime" column="CREATE_TIME"/>
+    </resultMap>
+
+    <sql id="columns">
+            `TYPE_ID` ,`TYPE_NAME` ,`PARENT_ID` ,`IS_AVIABLE` ,`SORT_FLAG` ,`CREATE_USER_ID` ,`CREATE_TIME`
+    </sql>
+
+    <insert id="insert">
+    	<selectKey keyProperty="typeId" resultType="string" order="BEFORE">    
+	            select uuid() as id from dual  
+	    </selectKey> 
+        insert into `BUS_GOODS_TYPE`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                `TYPE_ID`,
+            </if>
+            <if test="typeName != null">
+                `TYPE_NAME`,
+            </if>
+            <if test="parentId != null">
+                `PARENT_ID`,
+            </if>
+            <if test="isAviable != null">
+                `IS_AVIABLE`,
+            </if>
+            <if test="sortFlag != null">
+                `SORT_FLAG`,
+            </if>
+            <if test="createUserId != null">
+                `CREATE_USER_ID`,
+            </if>
+            <if test="createTime != null">
+                `CREATE_TIME`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+            #{typeId} ,
+            </if>
+            <if test="typeName != null">
+            #{typeName} ,
+            </if>
+            <if test="parentId != null">
+            #{parentId} ,
+            </if>
+            <if test="isAviable != null">
+            #{isAviable} ,
+            </if>
+            <if test="sortFlag != null">
+            #{sortFlag} ,
+            </if>
+            <if test="createUserId != null">
+            #{createUserId} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `BUS_GOODS_TYPE`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="typeId != null">
+                and `TYPE_ID` = #{typeId}
+            </if>
+            <if test="typeName != null">
+                and `TYPE_NAME` = #{typeName}
+            </if>
+            <if test="parentId != null">
+                and `PARENT_ID` = #{parentId}
+            </if>
+            <if test="isAviable != null">
+                and `IS_AVIABLE` = #{isAviable}
+            </if>
+            <if test="sortFlag != null">
+                and `SORT_FLAG` = #{sortFlag}
+            </if>
+            <if test="createUserId != null">
+                and `CREATE_USER_ID` = #{createUserId}
+            </if>
+            <if test="createTime != null">
+                and `CREATE_TIME` = #{createTime}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `BUS_GOODS_TYPE`
+        where `TYPE_ID` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `BUS_GOODS_TYPE`
+        <set>
+                <if test="typeName != null">
+                    `TYPE_NAME` = #{typeName},
+                </if>
+                <if test="parentId != null">
+                    `PARENT_ID` = #{parentId},
+                </if>
+                <if test="isAviable != null">
+                    `IS_AVIABLE` = #{isAviable},
+                </if>
+                <if test="sortFlag != null">
+                    `SORT_FLAG` = #{sortFlag},
+                </if>
+                <if test="createUserId != null">
+                    `CREATE_USER_ID` = #{createUserId},
+                </if>
+                <if test="createTime != null">
+                    `CREATE_TIME` = #{createTime},
+                </if>
+        </set>
+        where `TYPE_ID` = #{typeId}
+    </update>
+
+    <select id="getById" resultMap="busgoodstype">
+        select
+        <include refid="columns" />
+        from `BUS_GOODS_TYPE`
+        where `TYPE_ID` =  #{id}
+    </select>
+
+    <select id="list" resultMap="busgoodstype">
+        select
+        <include refid="columns" />
+        from `BUS_GOODS_TYPE`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="typeId != null">
+                and `TYPE_ID` = #{typeId}
+            </if>
+            <if test="typeName != null">
+                and `TYPE_NAME` = #{typeName}
+            </if>
+            <if test="parentId != null">
+                and `PARENT_ID` = #{parentId}
+            </if>
+            <if test="isAviable != null">
+                and `IS_AVIABLE` = #{isAviable}
+            </if>
+            <if test="sortFlag != null">
+                and `SORT_FLAG` = #{sortFlag}
+            </if>
+            <if test="createUserId != null">
+                and `CREATE_USER_ID` = #{createUserId}
+            </if>
+            <if test="createTime != null">
+                and `CREATE_TIME` = #{createTime}
+            </if>
+        </trim>
+    </select>
+</mapper>

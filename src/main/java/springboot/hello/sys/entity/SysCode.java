@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 /**
-* Created by hbm Generator<27683139@qq.com> on 2020年10月24日.
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
 */
 @Table(name = "SYS_CODE")
 public class SysCode implements Serializable {
@@ -24,7 +24,7 @@ public class SysCode implements Serializable {
          private String codeId; 
          
         /**
-         *编码类型
+         *编码类型ID
          */
          @Column(name="CODE_TYPE_ID")
          private String codeTypeId;
@@ -36,13 +36,19 @@ public class SysCode implements Serializable {
          private String code;
          
         /**
+         *编码类型编码
+         */
+         @Column(name="CODE_TYPE_CODE")
+         private String codeTypeCode;
+         
+        /**
          *编码值
          */
          @Column(name="CODE_VAL")
          private String codeVal;
          
         /**
-         *是否可用
+         *是否可用 1可用 0不可用
          */
          @Column(name="IS_AVIABLE")
          private BigDecimal isAviable;
@@ -87,6 +93,13 @@ public class SysCode implements Serializable {
 
         public void setCode(String code) {
             this.code = code;
+        }
+        public String getCodeTypeCode() {
+            return codeTypeCode;
+        }
+
+        public void setCodeTypeCode(String codeTypeCode) {
+            this.codeTypeCode = codeTypeCode;
         }
         public String getCodeVal() {
             return codeVal;

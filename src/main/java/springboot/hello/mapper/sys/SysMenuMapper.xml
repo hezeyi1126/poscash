@@ -1,111 +1,116 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<!-- * Created by hbm Generator<27683139@qq.com> on 2020年10月24日. -->
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2020年10月25日.
+-->
 <mapper namespace="springboot.hello.sys.dao.SysMenuDao">
-	<resultMap id="sysmenu"
-		type="springboot.hello.sys.entity.SysMenu">
-		<id property="menuId" column="MENU_ID" />
-		<result property="isAviable" column="IS_AVIABLE" />
-		<result property="menuType" column="MENU_TYPE" />
-		<result property="menuName" column="MENU_NAME" />
-		<result property="menuUrl" column="MENU_URL" />
-		<result property="menuIcon" column="MENU_ICON" />
-		<result property="sortFlag" column="SORT_FLAG" />
-		<result property="createUserId" column="CREATE_USER_ID" />
-		<result property="createTime" column="CREATE_TIME" />
-	</resultMap>
+    <resultMap id="sysmenu" type="springboot.hello.sys.entity.SysMenu">
+            <id property="menuId" column="MENU_ID"/>
+            <result property="parentId" column="PARENT_ID"/>
+            <result property="isAviable" column="IS_AVIABLE"/>
+            <result property="menuType" column="MENU_TYPE"/>
+            <result property="menuName" column="MENU_NAME"/>
+            <result property="menuUrl" column="MENU_URL"/>
+            <result property="menuIcon" column="MENU_ICON"/>
+            <result property="sortFlag" column="SORT_FLAG"/>
+            <result property="createUserId" column="CREATE_USER_ID"/>
+            <result property="createTime" column="CREATE_TIME"/>
+    </resultMap>
 
-	<sql id="columns">
-		`MENU_ID` ,`IS_AVIABLE` ,`MENU_TYPE` ,`MENU_NAME` ,`MENU_URL` ,`MENU_ICON`
-		,`SORT_FLAG` ,`CREATE_USER_ID` ,`CREATE_TIME`
-	</sql>
-
-	<insert id="insert">
-		<selectKey keyProperty="menuId" resultType="string"
-			order="BEFORE">
-			select uuid() as id from dual
-		</selectKey>
-		insert into `SYS_MENU`
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="menuId != null">
-				`MENU_ID`,
-			</if>
-			<if test="isAviable != null">
-				`IS_AVIABLE`,
-			</if>
-			<if test="menuType != null">
-				`MENU_TYPE`,
-			</if>
-			<if test="menuName != null">
-				`MENU_NAME`,
-			</if>
-			<if test="menuUrl != null">
-				`MENU_URL`,
-			</if>
-			<if test="menuIcon != null">
-				`MENU_ICON`,
-			</if>
-			<if test="sortFlag != null">
-				`SORT_FLAG`,
-			</if>
-			<if test="createUserId != null">
-				`CREATE_USER_ID`,
-			</if>
-			<if test="createTime != null">
-				`CREATE_TIME`,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="menuId != null">
-				#{menuId} ,
-			</if>
-			<if test="isAviable != null">
-				#{isAviable} ,
-			</if>
-			<if test="menuType != null">
-				#{menuType} ,
-			</if>
-			<if test="menuName != null">
-				#{menuName} ,
-			</if>
-			<if test="menuUrl != null">
-				#{menuUrl} ,
-			</if>
-			<if test="menuIcon != null">
-				#{menuIcon} ,
-			</if>
-			<if test="sortFlag != null">
-				#{sortFlag} ,
-			</if>
-			<if test="createUserId != null">
-				#{createUserId} ,
-			</if>
-			<if test="createTime != null">
-				#{createTime} ,
-			</if>
-		</trim>
-	</insert>
-
-
-
-	<delete id="deleteByIds">
-		delete from `SYS_MENU`
-		where `MENU_ID` in
-		<foreach collection="ids" open="(" item="id" separator=","
-			close=")">
-			#{id}
-		</foreach>
-	</delete>
+    <sql id="columns">
+            `MENU_ID` ,`PARENT_ID` ,`IS_AVIABLE` ,`MENU_TYPE` ,`MENU_NAME` ,`MENU_URL` ,`MENU_ICON` ,`SORT_FLAG` ,`CREATE_USER_ID` ,`CREATE_TIME`
+    </sql>
+    
+      <insert id="insert">
+    	<selectKey keyProperty="menuId" resultType="string" order="BEFORE">    
+	            select uuid() as id from dual  
+	    </selectKey> 
+        insert into `SYS_MENU`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                `MENU_ID`,
+            </if>
+            <if test="parentId != null">
+                `PARENT_ID`,
+            </if>
+            <if test="isAviable != null">
+                `IS_AVIABLE`,
+            </if>
+            <if test="menuType != null">
+                `MENU_TYPE`,
+            </if>
+            <if test="menuName != null">
+                `MENU_NAME`,
+            </if>
+            <if test="menuUrl != null">
+                `MENU_URL`,
+            </if>
+            <if test="menuIcon != null">
+                `MENU_ICON`,
+            </if>
+            <if test="sortFlag != null">
+                `SORT_FLAG`,
+            </if>
+            <if test="createUserId != null">
+                `CREATE_USER_ID`,
+            </if>
+            <if test="createTime != null">
+                `CREATE_TIME`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+            #{menuId} ,
+            </if>
+            <if test="parentId != null">
+            #{parentId} ,
+            </if>
+            <if test="isAviable != null">
+            #{isAviable} ,
+            </if>
+            <if test="menuType != null">
+            #{menuType} ,
+            </if>
+            <if test="menuName != null">
+            #{menuName} ,
+            </if>
+            <if test="menuUrl != null">
+            #{menuUrl} ,
+            </if>
+            <if test="menuIcon != null">
+            #{menuIcon} ,
+            </if>
+            <if test="sortFlag != null">
+            #{sortFlag} ,
+            </if>
+            <if test="createUserId != null">
+            #{createUserId} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+        </trim>
+    </insert>
 
 
 
-	<select id="getById" resultMap="sysmenu">
-		select
-		<include refid="columns" />
-		from `SYS_MENU`
-		where `MENU_ID` = #{id}
-	</select>
+    <delete id="deleteByIds">
+        delete from `SYS_MENU`
+        where `MENU_ID` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
 
+    
 
+    <select id="getById" resultMap="sysmenu">
+        select
+        <include refid="columns" />
+        from `SYS_MENU`
+        where `MENU_ID` =  #{id}
+    </select>
+
+    
 </mapper>
