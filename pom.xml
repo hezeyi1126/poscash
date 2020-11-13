@@ -98,6 +98,15 @@
 
 
 	<build>
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
 		
 		<plugins>
 			<plugin>

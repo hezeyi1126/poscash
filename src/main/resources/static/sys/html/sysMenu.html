@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/xadmin.css">
 
-<script src="/js/axios.min.js" charset="utf-8"></script>
 <script src="/js/jquery.min.js" charset="utf-8"></script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/tools.js"></script>
@@ -160,7 +159,7 @@
 	var queryid = "sysMenuQuery"
 	var cmd = "add";//默认为添加 可以为edit
 	$(document).ready(function() {
-		
+		initSelect();
 	});
 
 	layui.use([ 'form', 'table', 'laypage','laydate' ], function() {
@@ -222,57 +221,26 @@
 		
 		 //初始化table↓
 		initTable();
+		//初始化
+		pro.callServer("sysMenuService", "list",{isAviable : 1, menuType : 1} , function(res) {
+			if (res.state == "1") {
+				var typeSelect = $('#editPane').find('[name=parentId]');
+				var searchrtypeSelect = $('#searchPane').find('[name=parentId]');
+				typeSelect.append('<option value="">请选择</option>');
+				searchrtypeSelect.append('<option value="">请选择</option>');
+				for(var i in  res.data){
+					typeSelect.append('<option value="'+ res.data[i].menuId +'">'+ res.data[i].menuName +'</option>');
+					searchrtypeSelect.append('<option value="'+ res.data[i].menuId +'">'+ res.data[i].menuName +'</option>');
+				}
+				form.render();
+			} else {
+
+			}
+		});
 		
 		//初始化table↑
 		
-		window.init = function(){
-			//初始化
-			pro.callServer("sysMenuService", "list",{isAviable : 1, menuType : 1} , function(res) {
-				if (res.data.state == "1") {
-					var typeSelect = $('#editPane').find('[name=parentId]');
-					var searchrtypeSelect = $('#searchPane').find('[name=parentId]');
-					typeSelect.append('<option value="">请选择</option>');
-					searchrtypeSelect.append('<option value="">请选择</option>');
-					for(var i in  res.data.data){
-						typeSelect.append('<option value="'+ res.data.data[i].menuId +'">'+ res.data.data[i].menuName +'</option>');
-						searchrtypeSelect.append('<option value="'+ res.data.data[i].menuId +'">'+ res.data.data[i].menuName +'</option>');
-					} 
-					form.render();
-				} else {
-					
-				}
-			});
-			//查询所有带code的select
-			var codeSelectArr = $('select[code]');
-			var arrstr = "";
-			codeSelectArr.each(function(){
-				arrstr +=$(this).attr('code') + ",";
-		    });
-			if(arrstr != ''){
-				arrstr = arrstr.substring(0,arrstr.length - 1);
-				 pro.callServer("sysCodeService", "getAllCode",{code : arrstr} , function(res) {
-						if (res.data.state == "1") {
-							var data = res.data.data;
-							codeSelectArr.each(function(){
-								for(var i in data){
-									if($(this).attr('code') == i){
-										$(this).append('<option value>请选择</option>');
-										for(var j in data[i]){
-											$(this).append('<option value="'+ data[i][j].codeVal +'">'+ data[i][j].code +'</option>');
-										}
-										
-									}
-								}
-						    });
-							form.render();
-						} else {
-							
-						}
-				}); 
-			}
-		}
 		
-		init();
 		
 		function initTable(params){
 			//console.log(params);
@@ -282,7 +250,7 @@
 			 }
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer("queryService", "queryById", params, function(res) {
-			
+
 				layer.close(loadindex);
 				//layer.msg(res.msg);
 				if (res.state == "1") {
@@ -292,9 +260,9 @@
 				 	// 分页样式
 					laypage.render({
 						elem : 'lafite_pages',
-						count : res.count,
+						count : res.data.count,
 						layout: ['count', 'prev', 'page', 'next', 'limit'],
-						theme : '#D91715',
+						theme : theme,
 						jump : function(obj) {
 							counts++;
 							//模拟渲染
@@ -327,15 +295,16 @@
 		
 		//渲染table
 		function loadTable(res){
+			console.log(res);
 			table.render({
 				elem : '#test'
 				,
 				toolbar : '#toolbarDemo',
 				title : '用户数据表',
 				totalRow : true,
-				limit: res.length,
-				cols : [ res.header],
-				data : res.data
+				limit: res.data.data.length,
+				cols : [  res.data.header],
+				data :  res.data.data
 			});
 		}
 
@@ -348,7 +317,7 @@
 				break;
 			case 'delSelected':
 				var data = checkStatus.data;
-				if(length == 0){
+				if(data.length == 0){
 					layer.msg('请选中需要删除的条目');
 					break;
 				}
@@ -429,6 +398,7 @@
 	删除选中条目
 	*/
 	function delSelected(data){
+		console.log(data);return;
 		var ids = "";
 		for(var i = 0 ;i < length;i++){
 			ids += data[i].menuId + ",";

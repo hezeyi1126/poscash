@@ -363,8 +363,7 @@ body{
 }
 
 .layui-table td, .layui-table th{
-    min-width: 80px;
-    text-align: center;
+    /*min-width: 80px;*/
 }
 
 table th, table td {
@@ -884,7 +883,7 @@ table th, table td {
 
     /* 分页居中 */
     #lafite_pages {
-        margin-left: 30%;
+        text-align: center;
     }
     .layui-laypage a:hover {
         color: #D91715;
@@ -970,3 +969,7 @@ table th, table td {
     /* .layui-layer-setwin .layui-layer-min cite {
         background: white !important;
     } */
+
+.layui-table-cell{
+    text-align: center;
+}

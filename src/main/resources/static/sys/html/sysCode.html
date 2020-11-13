@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/xadmin.css">
 
-<script src="/js/axios.min.js" charset="utf-8"></script>
 <script src="/js/jquery.min.js" charset="utf-8"></script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/tools.js"></script>
@@ -156,7 +155,7 @@
 	var queryid = "sysCodeQuery"
 	var cmd = "add";//默认为添加 可以为edit
 	$(document).ready(function() {
-
+		initSelect();
 	});
 
 	layui.use([ 'form', 'table', 'laypage','laydate' ], function() {
@@ -171,23 +170,23 @@
 		//初始化
 		pro.callServer("sysCodeTypeService", "list",{} , function(res) {
 			console.log(res);
-			if (res.data.state == "1") {
+			if (res.state == "1") {
 				var typeSelect = $('#editPane').find('[name=codeTypeId]');
 				var searchrtypeSelect = $('#searchPane').find('[name=codeTypeId]');
 				typeSelect.append('<option value="">请选择</option>');
 				searchrtypeSelect.append('<option value="">请选择</option>');
-				for(var i in  res.data.data){
-					typeSelect.append('<option value="'+ res.data.data[i].codeTypeId +'">'+ res.data.data[i].codeTypeName +'</option>');
-					searchrtypeSelect.append('<option value="'+ res.data.data[i].codeTypeId +'">'+ res.data.data[i].codeTypeName +'</option>');
-				} 
-				
+				for(var i in  res.data){
+					typeSelect.append('<option value="'+ res.data[i].codeTypeId +'">'+ res.data[i].codeTypeName +'</option>');
+					searchrtypeSelect.append('<option value="'+ res.data[i].codeTypeId +'">'+ res.data[i].codeTypeName +'</option>');
+				}
+
 				form.render();
 			} else {
-				
+
 			}
 		});
-		
-		
+
+
 		 //同时绑定多个
 		  $('[inputtype=date]').each(function(){
 		    laydate.render({
@@ -196,36 +195,7 @@
 		    });
 		  });
 			
-		window.init = function(){
-			//查询所有带code的select
-			var codeSelectArr = $('select[code]');
-			var arrstr = "";
-			codeSelectArr.each(function(){
-				arrstr +=$(this).attr('code') + ",";
-		    });
-			if(arrstr != ''){
-				arrstr = arrstr.substring(0,arrstr.length - 1);
-				 pro.callServer("sysCodeService", "getAllCode",{code : arrstr} , function(res) {
-						if (res.data.state == "1") {
-							var data = res.data.data;
-							codeSelectArr.each(function(){
-								for(var i in data){
-									if($(this).attr('code') == i){
-										for(var j in data[i]){
-											$(this).append('<option value="'+ data[i][j].codeVal +'">'+ data[i][j].code +'</option>');
-										}
-										
-									}
-								}
-						    });
-							form.render();
-						} else {
-							
-						}
-				}); 
-			}
-		}
-		
+
 		//监听查询
 		window.search = function(){
 			//获取所有条件
@@ -255,8 +225,8 @@
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer(service, cmd, data.field, function(res) {
 				layer.close(loadindex);
-				layer.msg(res.data.msg);
-				if (res.data.state == "1") {
+				layer.msg(res.msg);
+				if (res.state == "1") {
 					search();
 					back();
 				} else {
@@ -278,16 +248,15 @@
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer("queryService", "queryById", params, function(res) {
 				layer.close(loadindex);
-				init();
-				//layer.msg(res.data.msg);
-				if (res.data.state == "1") {
+				//layer.msg(res.msg);
+				if (res.state == "1") {
 					//console.log(res);
 					loadTable(res);
 					var counts = 0;
 				 	// 分页样式
 					laypage.render({
 						elem : 'lafite_pages',
-						count : res.data.data.count,
+						count : res.data.count,
 						layout: ['count', 'prev', 'page', 'next', 'limit'],
 						theme : '#D91715',
 						jump : function(obj) {
@@ -302,8 +271,8 @@
 								pro.callServer("queryService", "queryById", params,function(res){
 									//console.log(res)
 									layer.close(loadindex);
-									//layer.msg(res.data.msg);
-									if (res.data.state == "1") {
+									//layer.msg(res.msg);
+									if (res.state == "1") {
 										loadTable(res);
 									}
 								});
@@ -328,9 +297,9 @@
 				toolbar : '#toolbarDemo',
 				title : '用户数据表',
 				totalRow : true,
-				limit: res.data.data.data.length,
-				cols : [ res.data.data.header],
-				data : res.data.data.data
+				limit: res.data.data.length,
+				cols : [ res.data.header],
+				data : res.data.data
 			});
 		}
 
@@ -389,12 +358,12 @@
 		pro.callServer(service, "getBId",{codeId : id},function(res){
 			layer.close(loadindex);
 			
-			if(res.data.state == '1'){
+			if(res.state == '1'){
 				console.log(res);
 				//清除页面的值
 				 clearForm();
 				//绑定值
-				fillForm(res.data.data)
+				fillForm(res.data)
 				//进入编辑页面
 				goedit();
 			}
@@ -409,8 +378,8 @@
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer(service, "del",{codeId : id},function(res){
 				layer.close(loadindex);
-				layer.msg(res.data.msg);
-				if(res.data.state == '1'){
+				layer.msg(res.msg);
+				if(res.state == '1'){
 					//刷新页面
 					back();
 					search();
@@ -437,8 +406,8 @@
 			 var loadindex = layer.load(loadingtype);
 			 pro.callServer(service, "delSelected",{ids : ids},function(res){
 					layer.close(loadindex);
-					layer.msg(res.data.msg);
-					if(res.data.state == '1'){
+					layer.msg(res.msg);
+					if(res.state == '1'){
 						//刷新页面
 						back();
 						search();

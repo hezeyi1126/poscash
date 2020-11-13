@@ -1,4 +1,5 @@
-﻿;!function (win) {
+﻿var theme = '#D91715';
+;!function (win) {
 	"use strict";
 	
 	var Pro = function(){
@@ -57,6 +58,51 @@
 			var head = document.getElementsByTagName("head")[0];
 			head.appendChild(link);
 	};
+
+
 }(window);
+
+//表单select属性值填充，需要再select标签上加code属性，code属性对应sys_code表的CODE_TYPE字段, value 参数不为空的时候判断选中
+window.initSelect = function (value) {
+	//查询所有带code的select
+	var codeSelectArr = $('select[code]');
+	console.log("code值："+codeSelectArr)
+	console.log("value值："+value)
+	var arrstr = "";
+	codeSelectArr.each(function () {
+		arrstr += $(this).attr('code') + ",";
+	});
+	if (arrstr != '') {
+		arrstr = arrstr.substring(0, arrstr.length - 1);
+		pro.callServer("sysCodeService", "getAllCode", {code: arrstr}, function (res) {
+			console.log(res)
+			if (res.state == "1") {
+				var data = res.data;
+				codeSelectArr.each(function () {
+					for (var i in data) {
+						if ($(this).attr('code') == i) {
+							$(this).append('<option value="">请选择</option>');
+							for (var j in data[i]) {
+								if(value == data[i][j].codeVal){
+									$(this).append('<option value="' + data[i][j].codeVal + '" selected>' + data[i][j].code + '</option>');
+								}else{
+									$(this).append('<option value="' + data[i][j].codeVal + '">' + data[i][j].code + '</option>');
+								}
+
+							}
+
+						}
+					}
+				});
+				layui.use('form',function(){
+					var form = layui.form;
+					form.render();
+				});
+			} else {
+				//初始化失败!
+			}
+		});
+	}
+}
 
 

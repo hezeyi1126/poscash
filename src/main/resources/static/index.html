@@ -10,8 +10,8 @@
         <link rel="stylesheet" href="/css/font.css">
         <link rel="stylesheet" href="/fontAlibaba/iconfont.css">
         <link rel="stylesheet" href="/css/xadmin.css">
-      <!--   <link rel="stylesheet" href="./css/theme6.css"> -->
-        <script src="/js/axios.min.js" charset="utf-8"></script>
+         <link rel="stylesheet" href="/css/theme1.css">
+        <script src="/js/jquery.min.js" charset="utf-8"></script>
         <script src="/lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="/js/xadmin.js"></script>
         <script type="text/javascript" src="/js/tools.js"></script>
@@ -157,9 +157,11 @@
             var $ = layui.jquery
             
             pro.callServer("sysMenuService", "list",{},function(res){
-				if(res.data.state == '1'){
+                console.log(res);
+				if(res.state == '1'){
+
 					var nav = $('#nav').empty();
-					var data = res.data.data;
+					var data = res.data;
 					//添加主菜单
 					for(var i in data){
 						if(data[i].menuType == '1'){

@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/xadmin.css">
 
-<script src="/js/axios.min.js" charset="utf-8"></script>
 <script src="/js/jquery.min.js" charset="utf-8"></script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/tools.js"></script>
@@ -195,8 +194,8 @@
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer(service, cmd, data.field, function(res) {
 				layer.close(loadindex);
-				layer.msg(res.data.msg);
-				if (res.data.state == "1") {
+				layer.msg(res.msg);
+				if (res.state == "1") {
 					search();
 					back();
 				} else {
@@ -218,16 +217,17 @@
 			 }
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer("queryService", "queryById", params, function(res) {
+				console.log(res);
 				layer.close(loadindex);
-				//layer.msg(res.data.msg);
-				if (res.data.state == "1") {
+				//layer.msg(res.msg);
+				if (res.state == "1") {
 					//console.log(res);
 					loadTable(res);
 					var counts = 0;
 				 	// 分页样式
 					laypage.render({
 						elem : 'lafite_pages',
-						count : res.data.data.count,
+						count : res.data.count,
 						layout: ['count', 'prev', 'page', 'next', 'limit'],
 						theme : '#D91715',
 						jump : function(obj) {
@@ -242,8 +242,8 @@
 								pro.callServer("queryService", "queryById", params,function(res){
 									//console.log(res)
 									layer.close(loadindex);
-									//layer.msg(res.data.msg);
-									if (res.data.state == "1") {
+									//layer.msg(res.msg);
+									if (res.state == "1") {
 										loadTable(res);
 									}
 								});
@@ -268,9 +268,9 @@
 				toolbar : '#toolbarDemo',
 				title : '用户数据表',
 				totalRow : true,
-				limit: res.data.data.data.length,
-				cols : [ res.data.data.header],
-				data : res.data.data.data
+				limit: res.data.data.length,
+				cols : [ res.data.header],
+				data : res.data.data
 			});
 		}
 
@@ -329,12 +329,12 @@
 		pro.callServer(service, "getBId",{codeTypeId : id},function(res){
 			layer.close(loadindex);
 			
-			if(res.data.state == '1'){
+			if(res.state == '1'){
 				console.log(res);
 				//清除页面的值
 				 clearForm();
 				//绑定值
-				fillForm(res.data.data)
+				fillForm(res.data)
 				//进入编辑页面
 				goedit();
 			}
@@ -349,8 +349,8 @@
 			 var loadindex = layer.load(loadingtype);
 			pro.callServer(service, "del",{codeTypeId : id},function(res){
 				layer.close(loadindex);
-				layer.msg(res.data.msg);
-				if(res.data.state == '1'){
+				layer.msg(res.msg);
+				if(res.state == '1'){
 					//刷新页面
 					back();
 					search();
@@ -377,8 +377,8 @@
 			 var loadindex = layer.load(loadingtype);
 			 pro.callServer(service, "delSelected",{ids : ids},function(res){
 					layer.close(loadindex);
-					layer.msg(res.data.msg);
-					if(res.data.state == '1'){
+					layer.msg(res.msg);
+					if(res.state == '1'){
 						//刷新页面
 						back();
 						search();
